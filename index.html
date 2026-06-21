@@ -1,3 +1,76 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Namuun AI</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #0f172a;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+header {
+  padding: 15px;
+  text-align: center;
+  background: #111827;
+  font-size: 20px;
+}
+
+#chat {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+}
+
+.msg {
+  margin: 8px 0;
+}
+
+.user { color: #38bdf8; }
+.ai { color: #34d399; }
+
+#inputArea {
+  display: flex;
+  padding: 10px;
+  background: #111827;
+}
+
+input {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+}
+
+button {
+  margin-left: 8px;
+  padding: 10px 15px;
+  border: none;
+  background: #3b82f6;
+  color: white;
+  border-radius: 6px;
+}
+</style>
+</head>
+
+<body>
+
+<header>🤖 Намуун AI (Simple)</header>
+
+<div id="chat"></div>
+
+<div id="inputArea">
+  <input id="input" placeholder="Юу асуух вэ?" />
+  <button onclick="send()">Илгээх</button>
+</div>
+
 <script>
 const chat = document.getElementById("chat");
 
@@ -9,32 +82,16 @@ function addMsg(text, cls){
   chat.scrollTop = chat.scrollHeight;
 }
 
-// жижиг “AI тархи”
-function getAIResponse(text){
+function getReply(text){
   text = text.toLowerCase();
 
-  if(text.includes("сайн уу") || text.includes("hi")){
-    return "Сайн байна уу 😊 Би Намуун байна. Чамд юугаар туслах вэ?";
-  }
+  if(text.includes("сайн уу")) return "Сайн байна 😊 Би Намуун байна.";
+  if(text.includes("хэн")) return "Би чиний хувийн AI туслах Намуун.";
+  if(text.includes("зорилго")) return "Чиний зорилгыг хамт төлөвлөж чадна.";
+  if(text.includes("цогт")) return "Цогт бол чиний бичиж байгаа AI уран зөгнөлт зохиол 👍";
+  if(text.includes("тусла")) return "Мэдээж 😊 Юунд туслах вэ?";
 
-  if(text.includes("хэн бэ")){
-    return "Би чиний хувийн туслах Намуун. Би чамд сурах, хөгжихөд тусална.";
-  }
-
-  if(text.includes("зорилго")){
-    return "Чиний зорилгыг надад бичээд өг. Би чамд төлөвлөгөө гаргаж өгнө.";
-  }
-
-  if(text.includes("тусла")){
-    return "Мэдээж 😊 Юунд туслах вэ?";
-  }
-
-  if(text.includes("цогт")){
-    return "Цогт зохиол чинь уран зөгнөлт AI тухай түүх шүү дээ 👍 Үргэлжлүүлэх үү?";
-  }
-
-  // default ухаантай мэт хариу
-  return "Би ойлголоо 🤔 Илүү тодорхой хэлж өгвөл илүү сайн тусалж чадна.";
+  return "Би ойлголоо 🤔 Илүү тодорхой хэлж өгөөч.";
 }
 
 function send(){
@@ -45,10 +102,13 @@ function send(){
   addMsg("Чи: " + text, "user");
 
   setTimeout(() => {
-    const reply = getAIResponse(text);
+    const reply = getReply(text);
     addMsg("Намуун: " + reply, "ai");
   }, 500);
 
   input.value = "";
 }
 </script>
+
+</body>
+</html>
